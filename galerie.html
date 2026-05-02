@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galerie Photos — Café du Cours, Vacqueyras</title>
+  <meta name="description" content="Galerie photos du Café du Cours à Vacqueyras — terrasse, cuisine provençale, vins, ambiance." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
+
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --warm-white: #fdf9f3;
+      --sienna: #9b5a2e;
+      --dark-sienna: #6b3a1a;
+      --charcoal: #2a2420;
+      --text-light: #6b5c50;
+      --gold: #c4963a;
+      --gold-light: #e8c06a;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+      --radius: 4px;
+      --transition: 0.4s cubic-bezier(.25, .46, .45, .94);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--warm-white);
+      color: var(--charcoal);
+      font-family: var(--font-body);
+      font-weight: 300;
+    }
+
+    /* ── Header ── */
+    .page-header {
+      background: var(--charcoal);
+      padding: 5rem 4vw 3.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 60px,
+        rgba(196,150,58,.03) 60px, rgba(196,150,58,.03) 62px);
+      pointer-events: none;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(245,240,232,.5);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-bottom: 2rem;
+      transition: color 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .back-link:hover { color: var(--gold-light); }
+
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .page-header p {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(0.95rem, 2vw, 1.2rem);
+      color: rgba(245,240,232,.55);
+      margin-top: 0.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Filtres catégories ── */
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 2rem 4vw;
+      background: var(--warm-white);
+      border-bottom: 1px solid rgba(42,36,32,.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+    }
+
+    .filter-btn {
+      padding: 0.45rem 1.2rem;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid rgba(42,36,32,.2);
+      color: var(--text-light);
+      cursor: pointer;
+      border-radius: 50px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--sienna);
+      border-color: var(--sienna);
+      color: var(--cream);
+    }
+
+    /* ── Masonry Grid ── */
+    .photo-grid {
+      columns: 3;
+      column-gap: 10px;
+      padding: 2.5rem 4vw;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) { .photo-grid { columns: 2; } }
+    @media (max-width: 540px) { .photo-grid { columns: 1; } }
+
+    .photo-card {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      display: block;
+    }
+
+    .photo-card.hidden { display: none; }
+
+    .photo-card img {
+      width: 100%;
+      display: block;
+      transition: transform var(--transition);
+    }
+
+    .photo-card:hover img { transform: scale(1.03); }
+
+    .photo-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(42,36,32,.75) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.35s;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.2rem;
+    }
+
+    .photo-card:hover .photo-card-overlay { opacity: 1; }
+
+    .photo-card-caption {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgba(245,240,232,.9);
+    }
+
+    .photo-card-zoom {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      color: rgba(245,240,232,0);
+      font-size: 1.6rem;
+      transition: all 0.35s;
+      pointer-events: none;
+    }
+
+    .photo-card:hover .photo-card-zoom {
+      color: rgba(245,240,232,.85);
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* ── Carousel Lightbox ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,8,6,.97);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-img-wrap {
+      max-width: 92vw;
+      max-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-img {
+      max-width: 92vw;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 20px 80px rgba(0,0,0,.8);
+      transition: opacity 0.25s ease;
+    }
+
+    .lightbox-img.fading { opacity: 0; }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      background: none;
+      border: none;
+      color: rgba(245,240,232,.65);
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: color 0.3s, transform 0.3s;
+      z-index: 10;
+    }
+
+    .lightbox-close:hover { color: var(--cream); transform: rotate(90deg); }
+
+    .lightbox-prev, .lightbox-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(245,240,232,.1);
+      border: 1px solid rgba(245,240,232,.15);
+      color: var(--cream);
+      font-size: 1.1rem;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, transform 0.3s;
+      z-index: 10;
+    }
+
+    .lightbox-prev { left: 2rem; }
+    .lightbox-next { right: 2rem; }
+    .lightbox-prev:hover { background: var(--sienna); transform: translateY(-50%) translateX(-2px); }
+    .lightbox-next:hover { background: var(--sienna); transform: translateY(-50%) translateX(2px); }
+
+    .lightbox-caption {
+      margin-top: 1.2rem;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-style: italic;
+      color: rgba(245,240,232,.75);
+    }
+
+    .lightbox-counter {
+      margin-top: 0.4rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,.3);
+    }
+
+    /* ── Thumbnails strip ── */
+    .lightbox-thumbs {
+      display: flex;
+      gap: 6px;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0 2rem;
+      max-width: 700px;
+    }
+
+    .lightbox-thumb {
+      width: 52px;
+      height: 38px;
+      object-fit: cover;
+      border-radius: 3px;
+      opacity: 0.45;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .lightbox-thumb.active {
+      opacity: 1;
+      border-color: var(--gold);
+      transform: scale(1.08);
+    }
+
+    .lightbox-thumb:hover { opacity: 0.8; }
+
+    /* ── Footer ── */
+    .page-footer {
+      background: var(--charcoal);
+      padding: 2.5rem 4vw;
+      text-align: center;
+      color: rgba(245,240,232,.35);
+      font-size: 0.82rem;
+    }
+
+    .page-footer a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .page-footer a:hover { color: var(--gold-light); }
+
+    @media (max-width: 640px) {
+      .lightbox-prev { left: 0.5rem; }
+      .lightbox-next { right: 0.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- En-tête -->
+  <header class="page-header">
+    <a href="index.html" class="back-link">
+      <i class="fa-solid fa-arrow-left"></i> Retour au site
+    </a>
+    <h1>Galerie<br><em>Photos</em></h1>
+    <p>L'ambiance du Café du Cours à travers nos images</p>
+  </header>
+
+  <!-- Filtres -->
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all" onclick="filterPhotos('all', this)">
+      <i class="fa-solid fa-grip"></i> Tout voir
+    </button>
+    <button class="filter-btn" data-filter="terrasse" onclick="filterPhotos('terrasse', this)">
+      <i class="fa-solid fa-tree"></i> Terrasse
+    </button>
+    <button class="filter-btn" data-filter="cuisine" onclick="filterPhotos('cuisine', this)">
+      <i class="fa-solid fa-fire-flame-curved"></i> Cuisine
+    </button>
+    <button class="filter-btn" data-filter="vins" onclick="filterPhotos('vins', this)">
+      <i class="fa-solid fa-wine-glass"></i> Vins
+    </button>
+    <button class="filter-btn" data-filter="salle" onclick="filterPhotos('salle', this)">
+      <i class="fa-solid fa-utensils"></i> Salle
+    </button>
+    <button class="filter-btn" data-filter="village" onclick="filterPhotos('village', this)">
+      <i class="fa-solid fa-mountain-sun"></i> Village
+    </button>
+  </div>
+
+  <!-- Grille masonry -->
+  <div class="photo-grid" id="photoGrid">
+
+    <div class="photo-card" data-cat="terrasse" onclick="openLightbox(0)">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=85" alt="La terrasse sous les platanes" loading="lazy" />
+      <div class="photo-card-overlay">
+        <span class="photo-card-caption">La terrasse sous les platanes</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass-plus photo-card-zoom"></i>
+    </div>
+
+    <div class="photo-card" data-cat="cuisine" onclick="openLightbox(1)">
+      <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=85" alt="Nos grillades maison" loading="lazy" />
+      <div class="photo-card-overlay">
+        <span class="photo-card-caption">Nos grillades maison</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass-plus photo-card-zoom"></i>
+    </div>
+
+    <div class="photo-card" data-cat="vins" onclick="openLightbox(2)">
+      <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&q=85" alt="Vins des Côtes du Rhône" loading="lazy" />
+      <div class="photo-card-overlay">
+        <span class="photo-card-caption">Vins des Côtes du Rhône</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass-plus photo-card-zoom"></i>
+    </div>
+
+    <div class="photo-card" data-cat="salle" onclick="openLightbox(3)">
+      <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=85" alt="Salle provençale" loading="lazy" />
+      <div class="photo-card-overlay">
+        <span class="photo-card-caption">Salle provençale (50 couverts)</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass-plus photo-card-zoom"></i>
+    </div>
+
+    <div class="photo-card" data-cat="village" onclick="openLightbox(4)">
+      <img src="https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=800&q=85" alt="Vacqueyras, village du Cru" loading="lazy" />
+      <div class="photo-card-overlay">
+        <span class="photo-card-caption">Vacqueyras, village du Cru</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass-plus photo-card-zoom"></i>
+    </div>
+
+    <div class="photo-card" data-cat="terrasse" onclick="openLightbox(5)">
+      <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=85" alt="Apéritif en terrasse" loading="lazy" />
+      <div class="photo-card-overlay">
+        <span class="photo-card-caption">Apéritif en terrasse</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass-plus photo-card-zoom"></i>
+    </div>
+
+    <div class="photo-card" data-cat="cuisine" onclick="openLightbox(6)">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=85" alt="Assiettes provençales" loading="lazy" />
+      <div class="photo-card-overlay">
+        <span class="photo-card-caption">Assiettes provençales</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass-plus photo-card-zoom"></i>
+    </div>
+
+    <div class="photo-card" data-cat="vins" onclick="openLightbox(7)">
+      <img src="https://images.unsplash.com/photo-1474722883778-792e7990302f?w=800&q=85" alt="La cave à vins" loading="lazy" />
+      <div class="photo-card-overlay">
+        <span class="photo-card-caption">La cave à vins</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass-plus photo-card-zoom"></i>
+    </div>
+
+    <div class="photo-card" data-cat="village" onclick="openLightbox(8)">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=85" alt="Les Dentelles de Montmirail" loading="lazy" />
+      <div class="photo-card-overlay">
+        <span class="photo-card-caption">Les Dentelles de Montmirail</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass-plus photo-card-zoom"></i>
+    </div>
+
+    <div class="photo-card" data-cat="cuisine" onclick="openLightbox(9)">
+      <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=800&q=85" alt="Spécialités du chef" loading="lazy" />
+      <div class="photo-card-overlay">
+        <span class="photo-card-caption">Spécialités du chef</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass-plus photo-card-zoom"></i>
+    </div>
+
+    <div class="photo-card" data-cat="salle" onclick="openLightbox(10)">
+      <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=85" alt="Décor intérieur provençal" loading="lazy" />
+      <div class="photo-card-overlay">
+        <span class="photo-card-caption">Décor intérieur provençal</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass-plus photo-card-zoom"></i>
+    </div>
+
+    <div class="photo-card" data-cat="terrasse" onclick="openLightbox(11)">
+      <img src="https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=800&q=85" alt="Repas en plein air" loading="lazy" />
+      <div class="photo-card-overlay">
+        <span class="photo-card-caption">Repas en plein air</span>
+      </div>
+      <i class="fa-solid fa-magnifying-glass-plus photo-card-zoom"></i>
+    </div>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
+    <button class="lightbox-prev" onclick="lightboxPrev()" aria-label="Précédent"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="lightbox-next" onclick="lightboxNext()" aria-label="Suivant"><i class="fa-solid fa-chevron-right"></i></button>
+    <div class="lightbox-img-wrap">
+      <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+    </div>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+    <div class="lightbox-thumbs" id="lightboxThumbs"></div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <p>
+      <a href="index.html"><i class="fa-solid fa-arrow-left" style="margin-right:.4rem"></i>Retour au site du Café du Cours</a>
+    </p>
+    <p style="margin-top:.75rem;">© 2025 Café du Cours — 140 Cours Stassart, 84190 Vacqueyras</p>
+  </footer>
+
+  <script>
+    // ── Photos data ──────────────────────────────────────────────
+    const allPhotos = [
+      { src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=90', thumb: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=120&q=70', caption: 'La terrasse sous les platanes', cat: 'terrasse' },
+      { src: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&q=90', thumb: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=120&q=70', caption: 'Nos grillades maison', cat: 'cuisine' },
+      { src: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1400&q=90', thumb: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=120&q=70', caption: 'Vins des Côtes du Rhône', cat: 'vins' },
+      { src: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1400&q=90', thumb: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=120&q=70', caption: 'Salle provençale (50 couverts)', cat: 'salle' },
+      { src: 'https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=1400&q=90', thumb: 'https://images.unsplash.com/photo-1504214208698-ea1916a2195a?w=120&q=70', caption: 'Vacqueyras, village du Cru', cat: 'village' },
+      { src: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=90', thumb: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=120&q=70', caption: 'Apéritif en terrasse', cat: 'terrasse' },
+      { src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1400&q=90', thumb: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=120&q=70', caption: 'Assiettes provençales', cat: 'cuisine' },
+      { src: 'https://images.unsplash.com/photo-1474722883778-792e7990302f?w=1400&q=90', thumb: 'https://images.unsplash.com/photo-1474722883778-792e7990302f?w=120&q=70', caption: 'La cave à vins', cat: 'vins' },
+      { src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=90', thumb: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=120&q=70', caption: 'Les Dentelles de Montmirail', cat: 'village' },
+      { src: 'https://images.unsplash.com/photo-1559847844-5315695dadae?w=1400&q=90', thumb: 'https://images.unsplash.com/photo-1559847844-5315695dadae?w=120&q=70', caption: 'Spécialités du chef', cat: 'cuisine' },
+      { src: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1400&q=90', thumb: 'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=120&q=70', caption: 'Décor intérieur provençal', cat: 'salle' },
+      { src: 'https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=1400&q=90', thumb: 'https://images.unsplash.com/photo-1530062845289-9109b2c9c868?w=120&q=70', caption: 'Repas en plein air', cat: 'terrasse' },
+    ];
+
+    let currentFilter = 'all';
+    let visiblePhotos = [...allPhotos];
+    let lightboxIndex = 0;
+
+    // Build thumbnails strip
+    function buildThumbs() {
+      const strip = document.getElementById('lightboxThumbs');
+      strip.innerHTML = '';
+      visiblePhotos.forEach((p, i) => {
+        const img = document.createElement('img');
+        img.src = p.thumb;
+        img.alt = p.caption;
+        img.className = 'lightbox-thumb' + (i === lightboxIndex ? ' active' : '');
+        img.onclick = () => { lightboxIndex = i; updateLightbox(true); };
+        strip.appendChild(img);
+      });
+    }
+
+    function openLightbox(idx) {
+      lightboxIndex = idx;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      buildThumbs();
+      updateLightbox();
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightbox(fade = false) {
+      const p = visiblePhotos[lightboxIndex];
+      const img = document.getElementById('lightboxImg');
+      if (fade) {
+        img.classList.add('fading');
+        setTimeout(() => {
+          img.src = p.src; img.alt = p.caption;
+          document.getElementById('lightboxCaption').textContent = p.caption;
+          document.getElementById('lightboxCounter').textContent = (lightboxIndex + 1) + ' / ' + visiblePhotos.length;
+          img.classList.remove('fading');
+          // Update thumb highlights
+          document.querySelectorAll('.lightbox-thumb').forEach((t, i) => t.classList.toggle('active', i === lightboxIndex));
+        }, 220);
+      } else {
+        img.src = p.src; img.alt = p.caption;
+        document.getElementById('lightboxCaption').textContent = p.caption;
+        document.getElementById('lightboxCounter').textContent = (lightboxIndex + 1) + ' / ' + visiblePhotos.length;
+      }
+    }
+
+    function lightboxPrev() {
+      lightboxIndex = (lightboxIndex - 1 + visiblePhotos.length) % visiblePhotos.length;
+      updateLightbox(true);
+    }
+
+    function lightboxNext() {
+      lightboxIndex = (lightboxIndex + 1) % visiblePhotos.length;
+      updateLightbox(true);
+    }
+
+    // ── Filtres ──────────────────────────────────────────────────
+    function filterPhotos(cat, btn) {
+      currentFilter = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('.photo-card');
+      visiblePhotos = [];
+      cards.forEach((card, i) => {
+        const match = cat === 'all' || card.dataset.cat === cat;
+        card.classList.toggle('hidden', !match);
+        if (match) {
+          // Reassign onclick index
+          const newIdx = visiblePhotos.length;
+          card.onclick = () => openLightbox(newIdx);
+          visiblePhotos.push(allPhotos[i]);
+        }
+      });
+    }
+
+    // Keyboard nav
+    document.addEventListener('keydown', (e) => {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') lightboxPrev();
+      if (e.key === 'ArrowRight') lightboxNext();
+    });
+
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('lightbox')) closeLightbox();
+    });
+  </script>
+
+</body>
+</html>

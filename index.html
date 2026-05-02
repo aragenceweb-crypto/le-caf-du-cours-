@@ -1,0 +1,3577 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Café du Cours — Vacqueyras, Provence</title>
+  <meta name="description"
+    content="Restaurant provençal au cœur de Vacqueyras. Grillades au feu de bois, spécialités provençales et vins de 39 vignerons. Tenu par Nathalie et Céline." />
+
+  <link rel="icon" type="image/jpeg" href="image/logo cafe du cours.jpg" />
+  <link rel="apple-touch-icon" href="image/logo cafe du cours.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+
+  <!-- Font Awesome 6 (icônes professionnelles) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    crossorigin="anonymous" />
+
+  <style>
+    /* ============================================================
+       VARIABLES & RESET
+    ============================================================ */
+    :root {
+      --cream: #f5f0e8;
+      --warm-white: #fdf9f3;
+      --sienna: #9b5a2e;
+      --dark-sienna: #6b3a1a;
+      --bordeaux: #7a1e2e;
+      --sage: #7a8c6a;
+      --sage-light: #a4b494;
+      --charcoal: #2a2420;
+      --text-light: #6b5c50;
+      --gold: #c4963a;
+      --gold-light: #e8c06a;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+
+      --section-pad: clamp(5rem, 10vw, 9rem);
+      --radius: 4px;
+      --transition: 0.4s cubic-bezier(.25, .46, .45, .94);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--warm-white);
+      color: var(--charcoal);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ============================================================
+       UTILITAIRES
+    ============================================================ */
+    .section-label {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.7rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--charcoal);
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--sienna);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: 1px solid currentColor;
+      transition: var(--transition);
+      cursor: pointer;
+      border-radius: var(--radius);
+    }
+
+    .btn-primary {
+      background: var(--sienna);
+      color: var(--cream);
+      border-color: var(--sienna);
+    }
+
+    .btn-primary:hover {
+      background: var(--dark-sienna);
+      border-color: var(--dark-sienna);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(155, 90, 46, .2);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--cream);
+      border-color: rgba(245, 240, 232, .5);
+    }
+
+    .btn-outline:hover {
+      background: rgba(245, 240, 232, .1);
+      border-color: var(--cream);
+    }
+
+    /* Animations révélation au scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .reveal-delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .reveal-delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .reveal-delay-4 {
+      transition-delay: 0.4s;
+    }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      /* Burger enfant aura z-index:101 donc visible au-dessus du menu */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 4vw;
+      transition: background 0.5s, padding 0.5s, box-shadow 0.5s;
+    }
+
+    nav.scrolled {
+      background: rgba(253, 249, 243, .97);
+      backdrop-filter: blur(12px);
+      padding: 1.4rem 4vw;
+      box-shadow: 0 1px 20px rgba(42, 36, 32, .08);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      transition: opacity 0.4s;
+    }
+
+    .nav-logo img {
+      height: 80px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-logo:hover {
+      opacity: 0.8;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 0.73rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, .85);
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold) !important;
+    }
+
+    nav.scrolled .nav-links a {
+      color: var(--text-light);
+    }
+
+    /* CTA nav toujours visible */
+    .nav-cta {
+      display: inline-block;
+      padding: 0.55rem 1.4rem;
+      background: var(--sienna);
+      color: var(--cream) !important;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: var(--radius);
+      transition: background 0.3s, transform 0.3s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--dark-sienna);
+      transform: translateY(-1px) !important;
+    }
+
+    /* Burger mobile */
+    .burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 201;
+      position: relative;
+      width: 44px;
+      height: 44px;
+    }
+
+    .burger span {
+      display: block;
+      height: 2px;
+      background: var(--charcoal);
+      border-radius: 2px;
+      transition: transform 0.4s cubic-bezier(.23, 1, .32, 1), opacity 0.3s ease, width 0.4s ease, background 0.4s;
+      transform-origin: center;
+    }
+
+    .burger span:nth-child(1) {
+      width: 24px;
+    }
+
+    .burger span:nth-child(2) {
+      width: 16px;
+      margin-left: auto;
+    }
+
+    .burger span:nth-child(3) {
+      width: 20px;
+    }
+
+    .burger:hover span {
+      background: var(--sienna);
+    }
+
+    .burger:hover span:nth-child(1) {
+      width: 24px;
+    }
+
+    .burger:hover span:nth-child(2) {
+      width: 24px;
+    }
+
+    .burger:hover span:nth-child(3) {
+      width: 24px;
+    }
+
+    /* Burger ouvert → X */
+    .burger.is-open span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+      width: 24px;
+      background: var(--cream);
+    }
+
+    .burger.is-open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .burger.is-open span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+      width: 24px;
+      background: var(--cream);
+    }
+
+    /* ── Menu mobile overlay ── */
+    .mobile-nav {
+      visibility: hidden;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      pointer-events: none;
+    }
+
+    .mobile-nav.open {
+      visibility: visible;
+      pointer-events: all;
+    }
+
+    /* Fond cliquable gauche */
+    .mobile-nav-backdrop {
+      flex: 1;
+      background: rgba(20, 14, 10, 0);
+      transition: background 0.55s ease;
+      cursor: pointer;
+    }
+
+    .mobile-nav.open .mobile-nav-backdrop {
+      background: rgba(20, 14, 10, 0.6);
+    }
+
+    /* Panneau droit */
+    .mobile-nav-panel {
+      width: min(300px, 80vw);
+      background: #1e1812;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.55s cubic-bezier(.23, 1, .32, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mobile-nav.open .mobile-nav-panel {
+      transform: translateX(0);
+    }
+
+    /* Barre dorée top */
+    .mobile-nav-panel::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--sienna), var(--gold), var(--sienna));
+      background-size: 200% 100%;
+      animation: shimmer 3s ease infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: 200% 0;
+      }
+
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    /* Header du panneau */
+    .mobile-nav-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 1.5rem 1.2rem;
+      border-bottom: 1px solid rgba(245, 240, 232, .07);
+    }
+
+    .mobile-nav-brand {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-style: italic;
+      color: rgba(245, 240, 232, .35);
+      letter-spacing: 0.06em;
+    }
+
+    .mobile-nav-close {
+      background: rgba(245, 240, 232, .07);
+      border: 1px solid rgba(245, 240, 232, .1);
+      color: var(--cream);
+      font-size: 0.85rem;
+      cursor: pointer;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+
+    .mobile-nav-close:hover {
+      background: var(--sienna);
+      border-color: var(--sienna);
+      transform: rotate(90deg);
+    }
+
+    /* Liste des liens */
+    .mobile-nav-links {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1.8rem 0 1rem;
+    }
+
+    .mobile-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1.5rem;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: rgba(245, 240, 232, .7);
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      position: relative;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: opacity 0.45s ease, transform 0.45s cubic-bezier(.23, 1, .32, 1), color 0.3s, padding-left 0.3s;
+    }
+
+    .mobile-nav.open .mobile-link:nth-child(1) {
+      opacity: 1;
+      transform: translateX(0);
+      transition-delay: 0.12s;
+    }
+
+    .mobile-nav.open .mobile-link:nth-child(2) {
+      opacity: 1;
+      transform: translateX(0);
+      transition-delay: 0.19s;
+    }
+
+    .mobile-nav.open .mobile-link:nth-child(3) {
+      opacity: 1;
+      transform: translateX(0);
+      transition-delay: 0.26s;
+    }
+
+    .mobile-nav.open .mobile-link:nth-child(4) {
+      opacity: 1;
+      transform: translateX(0);
+      transition-delay: 0.33s;
+    }
+
+    .mobile-link-num {
+      font-family: var(--font-body);
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--sienna);
+      min-width: 1.2rem;
+      opacity: 0.8;
+      font-style: normal;
+      flex-shrink: 0;
+    }
+
+    .mobile-link-line {
+      position: absolute;
+      left: 2rem;
+      bottom: 0;
+      height: 1px;
+      width: 0;
+      background: linear-gradient(90deg, var(--sienna), transparent);
+      transition: width 0.4s cubic-bezier(.23, 1, .32, 1);
+    }
+
+    .mobile-link:hover {
+      color: var(--cream);
+      padding-left: 2.4rem;
+    }
+
+    .mobile-link:hover .mobile-link-line {
+      width: calc(100% - 4rem);
+    }
+
+    .mobile-nav-cta-wrap {
+      padding: 0 1.8rem 1.2rem;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.45s ease 0.4s, transform 0.45s ease 0.4s;
+    }
+
+    .mobile-nav.open .mobile-nav-cta-wrap {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-link-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.95rem 1.5rem;
+      background: var(--sienna);
+      color: var(--cream) !important;
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      width: 100%;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .mobile-link-cta:hover {
+      background: var(--dark-sienna);
+      transform: translateY(-2px);
+    }
+
+    /* Footer du panneau */
+    .mobile-nav-footer {
+      padding: 1.5rem 2rem;
+      border-top: 1px solid rgba(245, 240, 232, .07);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease 0.5s, transform 0.4s ease 0.5s;
+    }
+
+    .mobile-nav.open .mobile-nav-footer {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-nav-footer-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .mobile-nav-footer-info a {
+      font-size: 0.78rem;
+      color: rgba(245, 240, 232, .35);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.3s;
+      text-decoration: none;
+    }
+
+    .mobile-nav-footer-info a:hover {
+      color: rgba(245, 240, 232, .7);
+    }
+
+    .mobile-nav-footer-info i {
+      font-size: 0.7rem;
+      color: var(--sienna);
+      width: 14px;
+    }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    #hero {
+      position: relative;
+      height: 100svh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url("image/interieure.jpg"),
+        linear-gradient(135deg, #3d2b1a 0%, #6b3a1a 40%, #2a1a0e 100%);
+      background-size: cover;
+      background-position: center center;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(42, 36, 32, .62) 0%, rgba(107, 58, 26, .35) 55%, rgba(42, 36, 32, .7) 100%);
+    }
+
+    /* Grain de texture subtil */
+    .hero-grain {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+      animation: heroFadeUp 1.1s ease both;
+    }
+
+    @keyframes heroFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 1.5rem;
+      animation: heroFadeUp 1.1s 0.2s ease both;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 300;
+      line-height: 0.95;
+      color: var(--cream);
+      margin-bottom: 1rem;
+      animation: heroFadeUp 1.1s 0.35s ease both;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(245, 240, 232, .72);
+      margin-bottom: 3rem;
+      animation: heroFadeUp 1.1s 0.5s ease both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: heroFadeUp 1.1s 0.65s ease both;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(245, 240, 232, .45);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      z-index: 2;
+      animation: heroFadeUp 1.1s 1s ease both;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, rgba(245, 240, 232, .45), transparent);
+      animation: scrollPulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+
+      0%,
+      100% {
+        opacity: 0.5;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    /* ============================================================
+       SECTION : NOTRE HISTOIRE
+    ============================================================ */
+    #histoire {
+      padding: var(--section-pad) 4vw;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6vw;
+      align-items: center;
+    }
+
+    /* Illustration simplifiée — paysage provençal */
+    .histoire-visual {
+      position: relative;
+    }
+
+    .paysage-wrap {
+      width: 100%;
+      aspect-ratio: 4/5;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 24px 24px 60px rgba(42, 36, 32, .12);
+      background: linear-gradient(180deg, #3d2b1a 0%, #6b3a1a 100%);
+      position: relative;
+    }
+
+    .paysage-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .paysage-wrap svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .histoire-badge {
+      position: absolute;
+      bottom: -1.25rem;
+      right: -1.25rem;
+      width: 110px;
+      height: 110px;
+      background: var(--sienna);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--cream);
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(155, 90, 46, .3);
+    }
+
+    .histoire-badge .num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 300;
+      line-height: 1;
+    }
+
+    .histoire-badge .txt {
+      font-size: 0.52rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: .85;
+      line-height: 1.4;
+    }
+
+    .histoire-text .section-label {
+      margin-bottom: 0.8rem;
+    }
+
+    .histoire-text .section-title {
+      margin-bottom: 1.4rem;
+    }
+
+    .histoire-text p {
+      color: var(--text-light);
+      margin-bottom: 1.1rem;
+      font-size: 0.95rem;
+    }
+
+    .histoire-text p strong {
+      color: var(--charcoal);
+      font-weight: 500;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .feature-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--cream);
+      border: 1px solid rgba(196, 150, 58, .25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--sienna);
+      font-size: 0.9rem;
+    }
+
+    .feature-text {
+      font-size: 0.82rem;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+
+    .feature-text strong {
+      display: block;
+      font-weight: 500;
+      color: var(--charcoal);
+      font-size: 0.84rem;
+    }
+
+    /* ============================================================
+       SECTION : LA CARTE & MENUS (avec onglet Vins intégré)
+    ============================================================ */
+    #carte {
+      background: var(--charcoal);
+      padding: var(--section-pad) 4vw;
+    }
+
+    .carte-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .carte-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .carte-header .section-label {
+      color: var(--sage-light);
+    }
+
+    .carte-header .section-title {
+      color: var(--cream);
+      margin-top: 0.7rem;
+    }
+
+    .carte-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.4rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 0.45rem 1.3rem;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid rgba(245, 240, 232, .2);
+      color: rgba(245, 240, 232, .5);
+      cursor: pointer;
+      border-radius: 50px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tab-btn i {
+      font-size: 0.75rem;
+    }
+
+    .tab-btn.active,
+    .tab-btn:hover {
+      background: var(--sienna);
+      border-color: var(--sienna);
+      color: var(--cream);
+    }
+
+    /* Panneau actif */
+    .menu-panel {
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .menu-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Carte formule déjeuner */
+    .formule-card {
+      background: linear-gradient(135deg, var(--sienna), var(--bordeaux));
+      border-radius: var(--radius);
+      padding: 2.2rem 2.8rem;
+      margin-bottom: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .formule-title {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 0.4rem;
+    }
+
+    .formule-desc {
+      color: rgba(245, 240, 232, .72);
+      font-size: 0.88rem;
+    }
+
+    .formule-prices {
+      text-align: right;
+    }
+
+    .price-item {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--gold-light);
+      white-space: nowrap;
+    }
+
+    .price-label {
+      font-size: 0.68rem;
+      color: rgba(245, 240, 232, .5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Plat du jour */
+    .plat-du-jour {
+      background: rgba(196, 150, 58, .12);
+      border: 1px solid rgba(196, 150, 58, .22);
+      padding: 1.6rem 2rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      border-radius: var(--radius);
+    }
+
+    .plat-du-jour-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(196, 150, 58, .18);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-light);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .plat-du-jour-label {
+      font-size: 0.63rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+
+    .plat-du-jour-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      color: var(--cream);
+      font-weight: 300;
+    }
+
+    .plat-du-jour-price {
+      margin-left: auto;
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      color: var(--gold-light);
+      white-space: nowrap;
+    }
+
+    /* Grille des plats — 3 colonnes fixes : les cartes du bas s'étirent */
+    .plats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(245, 240, 232, .06);
+      border: 1px solid rgba(245, 240, 232, .06);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .plat-card {
+      background: var(--charcoal);
+      padding: 1.6rem 1.8rem;
+      transition: background var(--transition);
+      position: relative;
+    }
+
+    .plat-card:hover {
+      background: rgba(245, 240, 232, .04);
+    }
+
+    .plat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .plat-card:hover::before {
+      opacity: 1;
+    }
+
+    .plat-category {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage-light);
+      margin-bottom: 0.4rem;
+    }
+
+    .plat-name {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 0.35rem;
+      line-height: 1.3;
+    }
+
+    .plat-desc {
+      font-size: 0.8rem;
+      color: rgba(245, 240, 232, .48);
+      line-height: 1.6;
+    }
+
+    /* Section vins intégrée dans la carte */
+    .vins-tab-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .vins-tab-text .section-label {
+      color: var(--sage-light);
+      margin-bottom: 0.8rem;
+    }
+
+    .vins-tab-text p {
+      color: rgba(245, 240, 232, .65);
+      font-size: 0.92rem;
+      margin-bottom: 1rem;
+      line-height: 1.75;
+    }
+
+    .vins-tab-text p strong {
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+
+    .vins-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(245, 240, 232, .1);
+    }
+
+    .vins-stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--gold-light);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.68rem;
+      color: rgba(245, 240, 232, .5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+    }
+
+    /* Liste des appellations */
+    .appellations-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .appellation-item {
+      background: rgba(245, 240, 232, .04);
+      border: 1px solid rgba(245, 240, 232, .07);
+      padding: 1.3rem 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: background var(--transition);
+    }
+
+    .appellation-item:hover {
+      background: rgba(245, 240, 232, .07);
+    }
+
+    .appellation-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-rouge {
+      background: #8a2030;
+    }
+
+    .dot-blanc {
+      background: #d4a96a;
+    }
+
+    .dot-rose {
+      background: #c07080;
+    }
+
+    .appellation-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--cream);
+    }
+
+    .appellation-cepages {
+      font-size: 0.75rem;
+      color: rgba(245, 240, 232, .45);
+      margin-top: 0.1rem;
+    }
+
+    .appellation-meta {
+      margin-left: auto;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ============================================================
+       SECTION : LE BAR (nouvelle section)
+    ============================================================ */
+    #bar {
+      padding: var(--section-pad) 4vw;
+      background: var(--warm-white);
+      position: relative;
+    }
+
+    #bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--sienna), var(--gold), var(--sage));
+    }
+
+    .bar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .bar-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .bar-header .section-label {
+      margin-bottom: 0.7rem;
+    }
+
+    /* Onglets bar */
+    .bar-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .bar-tab-btn {
+      padding: 0.5rem 1.4rem;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid rgba(42, 36, 32, .15);
+      color: var(--text-light);
+      cursor: pointer;
+      border-radius: 50px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .bar-tab-btn i {
+      font-size: 0.75rem;
+    }
+
+    .bar-tab-btn.active,
+    .bar-tab-btn:hover {
+      background: var(--charcoal);
+      border-color: var(--charcoal);
+      color: var(--cream);
+    }
+
+    .bar-panel {
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .bar-panel.active {
+      display: block;
+    }
+
+    /* Grille des boissons — 3 colonnes fixes : les cartes du bas s'étirent */
+    .drinks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .drink-card {
+      background: #fff;
+      border: 1px solid rgba(42, 36, 32, .07);
+      border-radius: var(--radius);
+      padding: 1.6rem 1.8rem;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .drink-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--sienna), var(--gold));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+
+    .drink-card:hover {
+      box-shadow: 0 6px 28px rgba(42, 36, 32, .08);
+      transform: translateY(-3px);
+    }
+
+    .drink-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .drink-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--cream);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      color: var(--sienna);
+      font-size: 1rem;
+    }
+
+    .drink-name {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: var(--charcoal);
+      margin-bottom: 0.3rem;
+    }
+
+    .drink-desc {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    .drink-price {
+      margin-top: 0.8rem;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--sienna);
+      font-weight: 400;
+    }
+
+    /* Bandeau "Bar & Café" en bas de section */
+    .bar-ambiance {
+      margin-top: 3rem;
+      background: var(--charcoal);
+      border-radius: var(--radius);
+      padding: 2.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .bar-ambiance-text h3 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 0.4rem;
+    }
+
+    .bar-ambiance-text p {
+      color: rgba(245, 240, 232, .55);
+      font-size: 0.88rem;
+      font-style: italic;
+      font-family: var(--font-display);
+    }
+
+    .bar-hours {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .bar-hour-item {
+      text-align: center;
+    }
+
+    .bar-hour-item .label {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+
+    .bar-hour-item .value {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--cream);
+      font-weight: 300;
+    }
+
+    /* ============================================================
+       SECTION : GALERIE / AMBIANCE (épurée)
+    ============================================================ */
+    #galerie {
+      padding: var(--section-pad) 4vw;
+      background: var(--cream);
+    }
+
+    .galerie-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .galerie-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .galerie-header .section-label {
+      margin-bottom: 0.7rem;
+    }
+
+    /* Grille épurée avec dégradés cohérents */
+    .galerie-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 240px 240px;
+      gap: 8px;
+    }
+
+    .galerie-item {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .galerie-item:first-child {
+      grid-row: 1 / 3;
+    }
+
+    .galerie-fill {
+      width: 100%;
+      height: 100%;
+      min-height: 200px;
+      position: relative;
+      transition: transform var(--transition);
+    }
+
+    .galerie-item:hover .galerie-fill {
+      transform: scale(1.02);
+    }
+
+    /* Photos galerie Ambiance — images locales */
+    .g1 {
+      background-image: url('image/cafe-du-cours.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .g2 {
+      background-image: url('image/grillade.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .g3 {
+      background-image: url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=700&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .g4 {
+      background-image: url('image/interieure.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .g5 {
+      background-image: url('image/vacqueyras.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .galerie-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(42, 36, 32, .3);
+      transition: background var(--transition);
+    }
+
+    .galerie-item:hover .galerie-overlay {
+      background: rgba(42, 36, 32, .1);
+    }
+
+    .galerie-caption {
+      position: absolute;
+      bottom: 1rem;
+      left: 1.2rem;
+      z-index: 2;
+      font-family: var(--font-display);
+      font-size: 0.98rem;
+      font-style: italic;
+      color: rgba(245, 240, 232, .9);
+    }
+
+    /* ============================================================
+       SECTION : CONTACT & RÉSERVATION (fusionnée)
+    ============================================================ */
+    #contact {
+      padding: var(--section-pad) 4vw;
+      background: var(--charcoal);
+      position: relative;
+    }
+
+    #contact::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(45deg,
+          transparent,
+          transparent 60px,
+          rgba(196, 150, 58, .025) 60px,
+          rgba(196, 150, 58, .025) 62px);
+      pointer-events: none;
+    }
+
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .contact-header .section-label {
+      color: var(--sage-light);
+    }
+
+    .contact-header .section-title {
+      color: var(--cream);
+      margin-top: 0.7rem;
+    }
+
+    .contact-header p {
+      color: rgba(245, 240, 232, .55);
+      font-size: 0.95rem;
+      font-style: italic;
+      font-family: var(--font-display);
+      margin-top: 0.75rem;
+    }
+
+    /* Layout 2 colonnes : infos + formulaire */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    /* Colonne gauche : infos de contact */
+
+
+    .contact-info-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 2rem;
+    }
+
+    .contact-info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .contact-info-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(245, 240, 232, .08);
+      border: 1px solid rgba(245, 240, 232, .1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--gold);
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .contact-info-item:hover .contact-info-icon {
+      background: var(--sienna);
+      border-color: var(--sienna);
+      color: var(--cream);
+    }
+
+
+
+    .contact-info-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-info-value {
+      font-size: 0.9rem;
+      color: rgba(245, 240, 232, .75);
+      line-height: 1.6;
+    }
+
+    .contact-info-value a {
+      color: rgba(245, 240, 232, .75);
+      transition: color 0.3s;
+    }
+
+    .contact-info-value a:hover {
+      color: var(--gold-light);
+    }
+
+    /* Séparateur horizontal */
+    .contact-divider {
+      border: none;
+      border-top: 1px solid rgba(245, 240, 232, .1);
+      margin: 2rem 0;
+    }
+
+    /* Liens sociaux */
+    .social-links {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.2rem;
+      border: 1px solid rgba(245, 240, 232, .15);
+      border-radius: var(--radius);
+      color: rgba(245, 240, 232, .65);
+      font-size: 0.78rem;
+      transition: var(--transition);
+    }
+
+    .social-btn:hover {
+      border-color: rgba(245, 240, 232, .4);
+      color: var(--cream);
+      background: rgba(245, 240, 232, .05);
+    }
+
+    /* ──────── FORMULAIRE ──────── */
+
+
+    .form-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 2rem;
+    }
+
+    .reservation-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .form-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, .5);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .form-label i {
+      font-size: 0.7rem;
+      color: var(--gold);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      background: rgba(245, 240, 232, .06);
+      border: 1px solid rgba(245, 240, 232, .12);
+      border-radius: var(--radius);
+      padding: 0.8rem 1rem;
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 300;
+      transition: border-color 0.3s, background 0.3s;
+      outline: none;
+      width: 100%;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: rgba(245, 240, 232, .25);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: rgba(196, 150, 58, .5);
+      background: rgba(245, 240, 232, .09);
+    }
+
+    .form-select {
+      appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(245,240,232,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .form-select option {
+      background: var(--charcoal);
+      color: var(--cream);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    .form-submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 1rem 2rem;
+      background: var(--sienna);
+      color: var(--cream);
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 0.5rem;
+    }
+
+    .form-submit:hover {
+      background: var(--dark-sienna);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(155, 90, 46, .25);
+    }
+
+    .form-submit i {
+      font-size: 0.85rem;
+    }
+
+    .form-note {
+      font-size: 0.75rem;
+      color: rgba(245, 240, 232, .3);
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    /* Message de succès */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      background: rgba(122, 140, 106, .15);
+      border: 1px solid rgba(122, 140, 106, .3);
+      border-radius: var(--radius);
+    }
+
+    .form-success i {
+      font-size: 2rem;
+      color: var(--sage-light);
+      margin-bottom: 0.75rem;
+    }
+
+    .form-success h4 {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-success p {
+      font-size: 0.9rem;
+      color: rgba(245, 240, 232, .6);
+    }
+
+    /* Carte map */
+    .map-embed {
+      max-width: 1100px;
+      margin: 3rem auto 0;
+      aspect-ratio: 16/5;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(245, 240, 232, .08);
+    }
+
+    .map-embed iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      filter: grayscale(30%) contrast(1.05);
+    }
+
+    /* ============================================================
+       FOOTER ÉTENDU — infos pratiques intégrées
+    ============================================================ */
+    .footer-infos {
+      max-width: 1100px;
+      margin: 0 auto 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      padding: 2.5rem 4vw 2.5rem;
+      border-bottom: 1px solid rgba(245, 240, 232, .07);
+    }
+
+
+
+    .footer-info-block .label {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .footer-info-block .label i {
+      font-size: 0.65rem;
+    }
+
+    .footer-info-block .value {
+      font-size: 0.84rem;
+      color: rgba(245, 240, 232, .5);
+      line-height: 1.8;
+    }
+
+    .footer-info-block .value a {
+      color: rgba(245, 240, 232, .5);
+      transition: color 0.3s;
+    }
+
+    .footer-info-block .value a:hover {
+      color: var(--gold-light);
+    }
+
+    .footer-info-block .value strong {
+      color: rgba(245, 240, 232, .75);
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: #1a1410;
+      padding: 3rem 0 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      padding: 0 4vw 2.5rem;
+      border-bottom: 1px solid rgba(245, 240, 232, .07);
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-tagline {
+      font-size: 0.84rem;
+      color: rgba(245, 240, 232, .38);
+      font-style: italic;
+      font-family: var(--font-display);
+      line-height: 1.7;
+    }
+
+    .footer-col-title {
+      font-size: 0.67rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .footer-links a {
+      font-size: 0.84rem;
+      color: rgba(245, 240, 232, .4);
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .footer-links a i {
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+
+    .footer-links a:hover {
+      color: var(--cream);
+    }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 2rem auto 0;
+      padding: 0 4vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.73rem;
+      color: rgba(245, 240, 232, .22);
+    }
+
+    .footer-bottom a {
+      color: rgba(245, 240, 232, .22);
+      transition: color 0.3s;
+    }
+
+    .footer-bottom a:hover {
+      color: rgba(245, 240, 232, .55);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1000px) {
+      .vins-tab-content {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .footer-infos {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .plats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .drinks-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      #histoire {
+        grid-template-columns: 1fr;
+      }
+
+      .histoire-visual {
+        max-width: 440px;
+        margin: 0 auto;
+      }
+
+      .galerie-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+
+      .galerie-item:first-child {
+        grid-row: auto;
+        grid-column: 1 / -1;
+        height: 260px;
+      }
+
+      /* Footer 900px : 2 col navigation + contact, brand full-width */
+      .footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .footer-inner>div:first-child {
+        grid-column: 1 / -1;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(245, 240, 232, .07);
+        margin-bottom: 0.5rem;
+      }
+
+      .formule-card {
+        grid-template-columns: 1fr;
+      }
+
+      .formule-prices {
+        text-align: left;
+      }
+
+      .bar-ambiance {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* Burger visible dès 768px */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .burger {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .galerie-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .galerie-item:first-child {
+        grid-column: auto;
+        height: 240px;
+      }
+
+      /* Footer mobile : tout en colonne */
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-inner>div:first-child {
+        grid-column: auto;
+      }
+
+      .footer-infos {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+
+      .plat-du-jour {
+        flex-wrap: wrap;
+      }
+
+      .plat-du-jour-price {
+        margin-left: 0;
+      }
+
+      .map-embed {
+        aspect-ratio: 16/9;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .vins-stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .plats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .drinks-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .footer-infos {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Galerie items cliquables ── */
+    .galerie-item {
+      cursor: pointer;
+    }
+
+    .galerie-zoom-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.7);
+      color: rgba(245, 240, 232, 0);
+      font-size: 1.8rem;
+      transition: all 0.35s ease;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .galerie-item:hover .galerie-zoom-icon {
+      color: rgba(245, 240, 232, 0.9);
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* ── Bouton CTA galerie ── */
+    .galerie-cta {
+      display: flex;
+      justify-content: center;
+      margin-top: 2.5rem;
+    }
+
+    .galerie-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2.4rem;
+      background: var(--sienna);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: var(--transition);
+      box-shadow: 0 4px 20px rgba(155, 90, 46, .2);
+    }
+
+    .galerie-cta-btn:hover {
+      background: var(--dark-sienna);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(155, 90, 46, .3);
+    }
+
+    .galerie-cta-btn i:last-child {
+      transition: transform 0.3s;
+    }
+
+    .galerie-cta-btn:hover i:last-child {
+      transform: translateX(4px);
+    }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 8, 6, 0.96);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-img-wrap {
+      max-width: 90vw;
+      max-height: 78vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 78vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 20px 80px rgba(0, 0, 0, .8);
+      transition: opacity 0.25s ease;
+    }
+
+    .lightbox-img.fading {
+      opacity: 0;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      background: none;
+      border: none;
+      color: rgba(245, 240, 232, .7);
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: color 0.3s, transform 0.3s;
+      z-index: 10;
+    }
+
+    .lightbox-close:hover {
+      color: var(--cream);
+      transform: rotate(90deg);
+    }
+
+    .lightbox-prev,
+    .lightbox-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(245, 240, 232, .1);
+      border: 1px solid rgba(245, 240, 232, .15);
+      color: var(--cream);
+      font-size: 1.1rem;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, transform 0.3s;
+      z-index: 10;
+    }
+
+    .lightbox-prev {
+      left: 2rem;
+    }
+
+    .lightbox-next {
+      right: 2rem;
+    }
+
+    .lightbox-prev:hover {
+      background: var(--sienna);
+      transform: translateY(-50%) translateX(-2px);
+    }
+
+    .lightbox-next:hover {
+      background: var(--sienna);
+      transform: translateY(-50%) translateX(2px);
+    }
+
+    .lightbox-caption {
+      margin-top: 1.2rem;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-style: italic;
+      color: rgba(245, 240, 232, .75);
+      text-align: center;
+    }
+
+    .lightbox-counter {
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245, 240, 232, .35);
+    }
+
+    @media (max-width: 640px) {
+      .lightbox-prev {
+        left: 0.75rem;
+      }
+
+      .lightbox-next {
+        right: 0.75rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+     NAVIGATION
+============================================================ -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo" aria-label="Café du Cours — Accueil">
+      <img src="image/logo.png" alt="Café du Cours" />
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#histoire">Notre Histoire</a></li>
+      <li><a href="#carte">La Carte</a></li>
+      <li><a href="#bar">Le Bar</a></li>
+      <li><a href="#galerie">Ambiance</a></li>
+      <li><a href="#contact">Commander</a></li>
+      <li><a href="#contact" class="nav-cta">Commander</a></li>
+    </ul>
+
+    <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Menu mobile overlay -->
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true" role="dialog" aria-label="Menu principal">
+
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
+
+    <div class="mobile-nav-panel">
+
+      <div class="mobile-nav-header">
+        <span class="mobile-nav-brand">Café du Cours</span>
+        <button class="mobile-nav-close" id="mobileNavClose" aria-label="Fermer le menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <nav class="mobile-nav-links">
+        <a href="#histoire" class="mobile-link">
+          <span class="mobile-link-num">01</span>Notre Histoire
+          <span class="mobile-link-line"></span>
+        </a>
+        <a href="#carte" class="mobile-link">
+          <span class="mobile-link-num">02</span>La Carte
+          <span class="mobile-link-line"></span>
+        </a>
+        <a href="#bar" class="mobile-link">
+          <span class="mobile-link-num">03</span>Le Bar
+          <span class="mobile-link-line"></span>
+        </a>
+        <a href="#galerie" class="mobile-link">
+          <span class="mobile-link-num">04</span>Ambiance
+          <span class="mobile-link-line"></span>
+        </a>
+      </nav>
+
+      <div class="mobile-nav-cta-wrap">
+        <a href="#contact" class="mobile-link-cta">
+          <i class="fa-regular fa-calendar-check"></i>Commander
+        </a>
+      </div>
+
+      <div class="mobile-nav-footer">
+        <div class="mobile-nav-footer-info">
+          <a href="tel:+33490658708"><i class="fa-solid fa-phone"></i>04 90 65 87 08</a>
+          <a href="mailto:cafeducours@orange.fr"><i class="fa-regular fa-envelope"></i>cafeducours@orange.fr</a>
+          <a href="#"><i class="fa-solid fa-location-dot"></i>140 Cours Stassart, Vacqueyras</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================
+     HERO
+============================================================ -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grain"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Vacqueyras · Provence · Depuis toujours</p>
+      <h1 class="hero-title">Café<br>du <em>Cours</em></h1>
+      <p class="hero-subtitle">Sous les platanes centenaires, la Provence dans chaque assiette</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary">
+          <i class="fa-regular fa-calendar-check" style="margin-right:.4rem"></i>
+          Réserver une table
+        </a>
+        <a href="#carte" class="btn btn-outline">Découvrir la carte</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Défiler</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+     NOTRE HISTOIRE
+============================================================ -->
+  <section id="histoire">
+    <!-- Photo Dentelles de Montmirail -->
+    <div class="histoire-visual reveal">
+      <div class="paysage-wrap">
+        <img src="image/nuit.jpg"
+          onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80'"
+          alt="Café du Cours — Vacqueyras" style="width:100%;height:100%;object-fit:cover;">
+
+
+      </div>
+    </div>
+
+    <!-- Texte -->
+    <div class="histoire-text">
+      <p class="section-label reveal">Notre Histoire</p>
+      <h2 class="section-title reveal reveal-delay-1">
+        La Provence<br>
+        <em>dans l'assiette</em>
+      </h2>
+      <p class="reveal reveal-delay-2">
+        Au pied des <strong>Dentelles de Montmirail</strong>, l’art de recevoir se perpétue avec chaleur et bonne humeur
+        au cœur du village de Vacqueyras, dans une ambiance conviviale et authentique propice au partage et à la
+        détente.
+
+      </p>
+      <p class="reveal reveal-delay-2">
+        Sur leur terrasse à l'ombre des <strong>platanes centenaires</strong> ou dans leur salle
+        décorée par leurs soins , chaque repas devient un moment d'authenticité et de partage.
+      </p>
+      <p class="reveal reveal-delay-3">
+        Les amateurs de vins ne seront pas déçus : Vacqueyras, distingué comme Gigondas par l'appellation <strong>Cru
+          des Côtes du Rhône</strong>, offre un terroir d'exception que nous célébrons avec fierté.
+      </p>
+
+      <div class="features-grid">
+        <div class="feature-item reveal reveal-delay-3">
+          <div class="feature-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
+          <div class="feature-text">
+            <strong>Grillades au feu de bois</strong>
+            En saison estivale
+          </div>
+        </div>
+        <div class="feature-item reveal reveal-delay-3">
+          <div class="feature-icon"><i class="fa-solid fa-leaf"></i></div>
+          <div class="feature-text">
+            <strong>Cuisine provençale</strong>
+            Faite maison, locale
+          </div>
+        </div>
+        <div class="feature-item reveal reveal-delay-4">
+          <div class="feature-icon"><i class="fa-solid fa-wine-bottle"></i></div>
+          <div class="feature-text">
+            <strong>Vins de la région</strong>
+            retrouver des domaine typique de la région
+          </div>
+        </div>
+        <div class="feature-item reveal reveal-delay-4">
+          <div class="feature-icon"><i class="fa-solid fa-tree"></i></div>
+          <div class="feature-text">
+            <strong>Terrasse ombragée</strong>
+            Platanes centenaires
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+     LA CARTE & MENUS (avec Vins intégrés)
+============================================================ -->
+  <section id="carte">
+    <div class="carte-inner">
+      <div class="carte-header reveal">
+        <p class="section-label">La Carte</p>
+        <h2 class="section-title" style="color:var(--cream);">Nos Saveurs <em
+            style="color:var(--gold-light)">Provençales</em></h2>
+        <div class="carte-tabs">
+          <button class="tab-btn active" data-tab="menus">
+            <i class="fa-regular fa-file-lines"></i> Menus
+          </button>
+          <button class="tab-btn" data-tab="entrees">
+            <i class="fa-solid fa-seedling"></i> Entrées
+          </button>
+          <button class="tab-btn" data-tab="plats">
+            <i class="fa-solid fa-utensils"></i> Plats
+          </button>
+          <button class="tab-btn" data-tab="desserts">
+            <i class="fa-solid fa-ice-cream"></i> Desserts
+          </button>
+          <button class="tab-btn" data-tab="vins">
+            <i class="fa-solid fa-wine-glass"></i> Vins & Cave
+          </button>
+        </div>
+      </div>
+
+      <!-- ─── Panneau MENUS ─── -->
+      <div class="menu-panel active" id="tab-menus">
+        <div class="plat-du-jour reveal">
+          <div class="plat-du-jour-icon">
+            <i class="fa-solid fa-sun"></i>
+          </div>
+          <div>
+            <p class="plat-du-jour-label">Le Plat du Jour — Ardoise quotidienne</p>
+            <p class="plat-du-jour-title">Selon le marché &amp; la saison</p>
+          </div>
+          <div class="plat-du-jour-price">14,50 €</div>
+        </div>
+
+        <div class="formule-card reveal">
+          <div>
+            <p class="formule-title">Formule Déjeuner</p>
+            <p class="formule-desc">Savourez un repas complet à prix doux, composé selon vos envies du moment.</p>
+          </div>
+          <div class="formule-prices">
+            <div>
+              <p class="price-label">Entrée + Plat ou Plat + Dessert</p>
+              <p class="price-item">18 €</p>
+            </div>
+            <div style="margin-top:1rem">
+              <p class="price-label">Entrée + Plat + Dessert</p>
+              <p class="price-item">22 €</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="plats-grid">
+          <div class="plat-card reveal">
+            <p class="plat-category">Nos engagements</p>
+            <p class="plat-name">Cuisine Faite Maison</p>
+            <p class="plat-desc">Tous nos plats sont préparés sur place avec des produits frais et locaux, dans la plus
+              pure tradition provençale.</p>
+          </div>
+          <div class="plat-card reveal reveal-delay-1">
+            <p class="plat-category">L'été</p>
+            <p class="plat-name">Grillades au Feu de Bois</p>
+            <p class="plat-desc">Brochettes, entrecôtes, volailles… Toute la saveur du feu de bois dans une ambiance de
+              terrasse authentique.</p>
+          </div>
+          <div class="plat-card reveal reveal-delay-2">
+            <p class="plat-category">Spécialités</p>
+            <p class="plat-name">Daube Provençale</p>
+            <p class="plat-desc">Bœuf mijoté lentement aux herbes de Provence, olives et vin rouge de Vacqueyras. Un
+              classique indémodable.</p>
+          </div>
+          <div class="plat-card reveal reveal-delay-1">
+            <p class="plat-category">Spécialités</p>
+            <p class="plat-name">Pieds &amp; Tripes</p>
+            <p class="plat-desc">La recette traditionnelle provençale transmise avec amour. Pour les amateurs
+              d'authenticité sans compromis.</p>
+          </div>
+          <div class="plat-card reveal reveal-delay-2">
+            <p class="plat-category">Incontournables</p>
+            <p class="plat-name">Carpaccio &amp; Tartare</p>
+            <p class="plat-desc">Viandes soigneusement sélectionnées, assaisonnements maîtrisés, fraîcheur garantie.</p>
+          </div>
+          <div class="plat-card reveal reveal-delay-3">
+            <p class="plat-category">Côté mer</p>
+            <p class="plat-name">Poissons &amp; Fruits de Mer</p>
+            <p class="plat-desc">Calamars, poissons du marché… La Méditerranée s'invite dans votre assiette.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Panneau ENTRÉES ─── -->
+      <div class="menu-panel" id="tab-entrees">
+        <div class="plats-grid">
+          <div class="plat-card">
+            <p class="plat-category">Terre</p>
+            <p class="plat-name">Raviolis du Dauphiné</p>
+            <p class="plat-desc">Raviolis frais, bouillon parfumé, comté râpé. Un classique revisité avec soin.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Légumes</p>
+            <p class="plat-name">Timbale de Courgette</p>
+            <p class="plat-desc">Courgettes provençales en timbale, herbes fraîches et coulis de tomates maison.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Festif</p>
+            <p class="plat-name">Foie Gras de Canard</p>
+            <p class="plat-desc">Foie gras mi-cuit, chutney de figues et pain grillé maison.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Fraîcheur</p>
+            <p class="plat-name">Carpaccio de Bœuf</p>
+            <p class="plat-desc">Tranches fines, roquette sauvage, parmesan, huile d'olive et câpres.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Provence</p>
+            <p class="plat-name">Ratatouille en Verrine</p>
+            <p class="plat-desc">Légumes de saison confits aux herbes de Provence, servis frais.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Salade</p>
+            <p class="plat-name">Salade Méridionale</p>
+            <p class="plat-desc">Mesclun, tomates cerise, olives, anchois et vinaigrette à l'huile d'olive AOP.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Panneau PLATS ─── -->
+      <div class="menu-panel" id="tab-plats">
+        <div class="plats-grid">
+          <div class="plat-card">
+            <p class="plat-category">Viande · Grill</p>
+            <p class="plat-name">Brochette de Canard</p>
+            <p class="plat-desc">Tendres morceaux de canard grillés au feu de bois, frites maison croustillantes.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Viande</p>
+            <p class="plat-name">Entrecôte Grillée</p>
+            <p class="plat-desc">Pièce de bœuf sélectionnée, sauce au Vacqueyras, frites fraîches ou gratin dauphinois.
+            </p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Viande</p>
+            <p class="plat-name">Steak Tartare</p>
+            <p class="plat-desc">Haché à la minute, condiments traditionnels, frites de saison.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Bistrot</p>
+            <p class="plat-name">Burger Maison</p>
+            <p class="plat-desc">Pain brioché artisanal, steak haché, condiments généreux.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Provence</p>
+            <p class="plat-name">Daube de Bœuf</p>
+            <p class="plat-desc">Mijotée 6 heures au vin rouge de Vacqueyras, carottes, olives noires et thym.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Mer</p>
+            <p class="plat-name">Calamars Grillés</p>
+            <p class="plat-desc">Calamars frais, beurre aillé persillé, légumes de saison et riz.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Volaille</p>
+            <p class="plat-name">Poulet Rôti Provençal</p>
+            <p class="plat-desc">Poulet fermier rôti aux herbes de garrigue, jus corsé et pommes de terre grenailles.
+            </p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Agneau</p>
+            <p class="plat-name">Agneau de Provence</p>
+            <p class="plat-desc">Côtelettes ou gigot selon la saison, flageolets maison et jus au romarin.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Panneau DESSERTS ─── -->
+      <div class="menu-panel" id="tab-desserts">
+        <div class="plats-grid">
+          <div class="plat-card">
+            <p class="plat-category">Traditionnel</p>
+            <p class="plat-name">Nougat Glacé</p>
+            <p class="plat-desc">Nougat de Montélimar, fruits confits, coulis de fruits rouges. La douceur de Provence.
+            </p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Classique</p>
+            <p class="plat-name">Tiramisu Maison</p>
+            <p class="plat-desc">Mascarpone aérien, biscuits imbibés, cacao grand cru. Préparé chaque matin.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Frais</p>
+            <p class="plat-name">Parfait Glacé</p>
+            <p class="plat-desc">Parfait aux fruits de saison, tuile croustillante et coulis.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Terroir</p>
+            <p class="plat-name">Gâteau aux Fruits</p>
+            <p class="plat-desc">Selon la saison : abricots, cerises, figues ou poires des vergers provençaux.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Fromages</p>
+            <p class="plat-name">Plateau de Fromages</p>
+            <p class="plat-desc">Sélection de fromages régionaux affinés, confiture de figues et noix fraîches.</p>
+          </div>
+          <div class="plat-card">
+            <p class="plat-category">Bistrot</p>
+            <p class="plat-name">Mousse au Chocolat</p>
+            <p class="plat-desc">Chocolat noir de couverture, légère comme un nuage. La valeur sûre.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Panneau VINS & CAVE (contenu de l'ancienne section vins) ─── -->
+      <div class="menu-panel" id="tab-vins">
+        <div class="vins-tab-content">
+          <!-- Texte -->
+          <div class="vins-tab-text">
+            <p class="section-label">La Cave</p>
+            <h3
+              style="font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300;color:var(--cream);line-height:1.2;margin:0.6rem 0 1.2rem;">
+              Les Vins de nos <em style="font-style:italic;color:var(--gold-light)">Vignerons</em>
+            </h3>
+            <p>
+              Vacqueyras est bien plus qu'un village : c'est un <strong>Cru reconnu des Côtes du Rhône</strong>, à
+              l'égal de Gigondas, réputé pour ses grenaches puissants et ses viogniers soyeux.
+            </p>
+            <p>
+              Notre cave réunit <strong>39 vignerons locaux</strong> soigneusement sélectionnés. Du vin de propriétaire
+              confidentiel aux cuvées de prestige — pour chaque plat, nous avons l'accord parfait.
+            </p>
+            <p>
+              Venez découvrir l'endroit <em style="font-family:var(--font-display);font-style:italic;">où les vignerons
+                eux-mêmes viennent déjeuner</em>. La preuve la plus sincère de notre sélection.
+            </p>
+
+            <div class="vins-stats">
+              <div class="vins-stat">
+                <div class="stat-number">39</div>
+                <div class="stat-label">Vignerons</div>
+              </div>
+              <div class="vins-stat">
+                <div class="stat-number">1</div>
+                <div class="stat-label">Appellation Cru</div>
+              </div>
+              <div class="vins-stat">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Accords Mets-Vins</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Appellations -->
+          <div>
+            <p class="section-label" style="color:var(--sage-light);margin-bottom:1rem;">Nos appellations</p>
+            <div class="appellations-list">
+              <div class="appellation-item">
+                <span class="appellation-dot dot-rouge"></span>
+                <div>
+                  <div class="appellation-name">Vacqueyras Rouge</div>
+                  <div class="appellation-cepages">Grenache Noir, Syrah, Mourvèdre</div>
+                </div>
+                <span class="appellation-meta">Cru</span>
+              </div>
+              <div class="appellation-item">
+                <span class="appellation-dot dot-blanc"></span>
+                <div>
+                  <div class="appellation-name">Vacqueyras Blanc</div>
+                  <div class="appellation-cepages">Clairette, Grenache Blanc, Viognier</div>
+                </div>
+                <span class="appellation-meta">Cru</span>
+              </div>
+              <div class="appellation-item">
+                <span class="appellation-dot dot-rose"></span>
+                <div>
+                  <div class="appellation-name">Vacqueyras Rosé</div>
+                  <div class="appellation-cepages">Grenache, Cinsault, Syrah</div>
+                </div>
+                <span class="appellation-meta">Cru</span>
+              </div>
+              <div class="appellation-item">
+                <span class="appellation-dot dot-rouge"></span>
+                <div>
+                  <div class="appellation-name">Gigondas</div>
+                  <div class="appellation-cepages">Grenache Noir, Syrah</div>
+                </div>
+                <span class="appellation-meta">Cru</span>
+              </div>
+              <div class="appellation-item">
+                <span class="appellation-dot dot-blanc"></span>
+                <div>
+                  <div class="appellation-name">Côtes du Rhône Villages</div>
+                  <div class="appellation-cepages">Grenache, Syrah, Viognier</div>
+                </div>
+                <span class="appellation-meta">AOC</span>
+              </div>
+              <div class="appellation-item">
+                <span class="appellation-dot dot-rouge"></span>
+                <div>
+                  <div class="appellation-name">Côtes du Rhône</div>
+                  <div class="appellation-cepages">Grenache, Syrah, Mourvèdre</div>
+                </div>
+                <span class="appellation-meta">AOC</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+     LE BAR (nouvelle section)
+============================================================ -->
+  <section id="bar">
+    <div class="bar-inner">
+      <div class="bar-header reveal">
+        <p class="section-label">Boissons</p>
+        <h2 class="section-title">Le <em>Bar</em></h2>
+        <div class="bar-tabs">
+          <button class="bar-tab-btn active" data-bar-tab="cocktails">
+            <i class="fa-solid fa-martini-glass-citrus"></i> Cocktails
+          </button>
+          <button class="bar-tab-btn" data-bar-tab="spiritueux">
+            <i class="fa-solid fa-bottle-droplet"></i> Spiritueux
+          </button>
+          <button class="bar-tab-btn" data-bar-tab="bieres">
+            <i class="fa-solid fa-beer-mug-empty"></i> Bières
+          </button>
+          <button class="bar-tab-btn" data-bar-tab="softs">
+            <i class="fa-solid fa-glass-water"></i> Softs &amp; Cafés
+          </button>
+        </div>
+      </div>
+
+      <!-- ─── Cocktails ─── -->
+      <div class="bar-panel active" id="bar-tab-cocktails">
+        <div class="drinks-grid">
+          <div class="drink-card reveal">
+            <div class="drink-icon"><i class="fa-solid fa-martini-glass-citrus"></i></div>
+            <div class="drink-name">Aperol Spritz</div>
+            <div class="drink-desc">Aperol, prosecco, eau gazeuse, rondelle d'orange. Le classique estival.</div>
+            <div class="drink-price">7,50 €</div>
+          </div>
+          <div class="drink-card reveal reveal-delay-1">
+            <div class="drink-icon"><i class="fa-solid fa-martini-glass-citrus"></i></div>
+            <div class="drink-name">Kir Provençal</div>
+            <div class="drink-desc">Crème de mûre artisanale, rosé de Vacqueyras, zeste de citron.</div>
+            <div class="drink-price">6,50 €</div>
+          </div>
+          <div class="drink-card reveal reveal-delay-2">
+            <div class="drink-icon"><i class="fa-solid fa-martini-glass-citrus"></i></div>
+            <div class="drink-name">Pastis Maison</div>
+            <div class="drink-desc">Pastis, sirop d'orgeat, glaçons. L'apéritif provençal par excellence.</div>
+            <div class="drink-price">4,00 €</div>
+          </div>
+          <div class="drink-card reveal reveal-delay-1">
+            <div class="drink-icon"><i class="fa-solid fa-martini-glass-citrus"></i></div>
+            <div class="drink-name">Mojito</div>
+            <div class="drink-desc">Rhum blanc, menthe fraîche, citron vert, sucre de canne, eau gazeuse.</div>
+            <div class="drink-price">8,00 €</div>
+          </div>
+          <div class="drink-card reveal reveal-delay-2">
+            <div class="drink-icon"><i class="fa-solid fa-martini-glass-citrus"></i></div>
+            <div class="drink-name">Sangria Maison</div>
+            <div class="drink-desc">Vin rouge de Vacqueyras, fruits de saison, épices douces et citrus.</div>
+            <div class="drink-price">7,00 €</div>
+          </div>
+          <div class="drink-card reveal reveal-delay-3">
+            <div class="drink-icon"><i class="fa-solid fa-martini-glass-citrus"></i></div>
+            <div class="drink-name">Cocktail sans alcool</div>
+            <div class="drink-desc">Jus de grenade, gingembre, citron, eau gazeuse et sirop de violette.</div>
+            <div class="drink-price">5,50 €</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Spiritueux ─── -->
+      <div class="bar-panel" id="bar-tab-spiritueux">
+        <div class="drinks-grid">
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-bottle-droplet"></i></div>
+            <div class="drink-name">Whisky Selection</div>
+            <div class="drink-desc">Sélection de single malts et blends. Servie au verre selon disponibilités.</div>
+            <div class="drink-price">à partir de 5,50 €</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-bottle-droplet"></i></div>
+            <div class="drink-name">Cognac &amp; Armagnac</div>
+            <div class="drink-desc">Eaux-de-vie de qualité, parfaites pour terminer un repas en beauté.</div>
+            <div class="drink-price">à partir de 5,00 €</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-bottle-droplet"></i></div>
+            <div class="drink-name">Rhums arrangés</div>
+            <div class="drink-desc">Rhums macérés aux fruits exotiques et épices. Maison ou sélection.</div>
+            <div class="drink-price">6,00 €</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-bottle-droplet"></i></div>
+            <div class="drink-name">Gin Premium</div>
+            <div class="drink-desc">Gins artisanaux servis avec tonic et garnitures assortis aux botaniques.</div>
+            <div class="drink-price">7,50 €</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-bottle-droplet"></i></div>
+            <div class="drink-name">Liqueurs provençales</div>
+            <div class="drink-desc">Chartreuse, Génépi, Marc de Provence. Les digestifs de notre terroir.</div>
+            <div class="drink-price">4,50 €</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-bottle-droplet"></i></div>
+            <div class="drink-name">Pastis 51 / Ricard</div>
+            <div class="drink-desc">L'apéritif emblématique du Sud, servi avec eau fraîche et glaçons.</div>
+            <div class="drink-price">3,50 €</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Bières ─── -->
+      <div class="bar-panel" id="bar-tab-bieres">
+        <div class="drinks-grid">
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-beer-mug-empty"></i></div>
+            <div class="drink-name">Pression du Moment</div>
+            <div class="drink-desc">Bière pression sélectionnée selon les saisons. Demandez la cuvée du jour.</div>
+            <div class="drink-price">3,50 € / 5,00 €</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-beer-mug-empty"></i></div>
+            <div class="drink-name">Bière Artisanale Locale</div>
+            <div class="drink-desc">Brasserie provençale en bouteille — blonde, ambrée ou blanche selon arrivage.</div>
+            <div class="drink-price">5,50 €</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-beer-mug-empty"></i></div>
+            <div class="drink-name">Heineken / Desperados</div>
+            <div class="drink-desc">Les classiques froids, en bouteille 33cl.</div>
+            <div class="drink-price">4,00 €</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-beer-mug-empty"></i></div>
+            <div class="drink-name">Bière sans alcool</div>
+            <div class="drink-desc">Bière légère sans alcool — toute la fraîcheur, sans modération.</div>
+            <div class="drink-price">3,50 €</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Softs & Cafés ─── -->
+      <div class="bar-panel" id="bar-tab-softs">
+        <div class="drinks-grid">
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-mug-hot"></i></div>
+            <div class="drink-name">Café Express</div>
+            <div class="drink-desc">Café de torréfaction artisanale, servi avec son carré de sucre.</div>
+            <div class="drink-price">2,50 €</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-mug-hot"></i></div>
+            <div class="drink-name">Café Crème / Cappuccino</div>
+            <div class="drink-desc">Café doux avec mousse de lait onctueuse.</div>
+            <div class="drink-price">3,50 €</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-mug-hot"></i></div>
+            <div class="drink-name">Thé &amp; Infusions</div>
+            <div class="drink-desc">Sélection de thés et infusions aux herbes aromatiques.</div>
+            <div class="drink-price">3,00 €</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-glass-water"></i></div>
+            <div class="drink-name">Eau minérale</div>
+            <div class="drink-desc">Eau plate ou gazeuse — Evian, Perrier ou eau du robinet filtrée.</div>
+            <div class="drink-price">2,50 € / gratuit</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-glass-water"></i></div>
+            <div class="drink-name">Sodas &amp; Jus de fruits</div>
+            <div class="drink-desc">Coca-Cola, Limonade, Jus d'orange frais pressé, Citronnade maison.</div>
+            <div class="drink-price">3,00 – 4,50 €</div>
+          </div>
+          <div class="drink-card">
+            <div class="drink-icon"><i class="fa-solid fa-glass-water"></i></div>
+            <div class="drink-name">Sirop &amp; Diabolo</div>
+            <div class="drink-desc">Menthe, grenadine, fraise, framboise, citron. À choisir parmi nos sirops.</div>
+            <div class="drink-price">2,50 – 3,50 €</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bandeau horaires bar -->
+      <div class="bar-ambiance reveal">
+        <div class="bar-ambiance-text">
+          <h3>Bar &amp; Café — Ouvert toute la journée</h3>
+          <p>Passez pour un café, un apéritif ou un verre entre amis sous les platanes.</p>
+        </div>
+        <div class="bar-hours">
+          <div class="bar-hour-item">
+            <div class="label">Café du matin</div>
+            <div class="value">Dès 8 h 00</div>
+          </div>
+          <div class="bar-hour-item">
+            <div class="label">Apéritif</div>
+            <div class="value">18 h – 20 h</div>
+          </div>
+          <div class="bar-hour-item">
+            <div class="label">Fermeture</div>
+            <div class="value">22 h 00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+     GALERIE / AMBIANCE (épurée, sans déco SVG inutile)
+============================================================ -->
+  <section id="galerie">
+    <div class="galerie-inner">
+      <div class="galerie-header reveal">
+        <p class="section-label">L'Ambiance</p>
+        <h2 class="section-title">Un Coin de Provence<br><em>à partager</em></h2>
+      </div>
+
+      <div class="galerie-grid">
+        <div class="galerie-item" onclick="openLightbox(0)" role="button" tabindex="0"
+          aria-label="Voir la photo : La terrasse sous les platanes">
+          <div class="galerie-fill g1">
+            <div class="galerie-overlay"></div>
+            <div class="galerie-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+          </div>
+          <p class="galerie-caption">La terrasse sous les platanes</p>
+        </div>
+        <div class="galerie-item" onclick="openLightbox(1)" role="button" tabindex="0"
+          aria-label="Voir la photo : Nos grillades maison">
+          <div class="galerie-fill g2">
+            <div class="galerie-overlay"></div>
+            <div class="galerie-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+          </div>
+          <p class="galerie-caption">Nos grillades maison</p>
+        </div>
+        <div class="galerie-item" onclick="openLightbox(2)" role="button" tabindex="0"
+          aria-label="Voir la photo : Vins des Côtes du Rhône">
+          <div class="galerie-fill g3">
+            <div class="galerie-overlay"></div>
+            <div class="galerie-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+          </div>
+          <p class="galerie-caption">Vins des Côtes du Rhône</p>
+        </div>
+        <div class="galerie-item" onclick="openLightbox(3)" role="button" tabindex="0"
+          aria-label="Voir la photo : Salle provençale">
+          <div class="galerie-fill g4">
+            <div class="galerie-overlay"></div>
+            <div class="galerie-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+          </div>
+          <p class="galerie-caption">Salle restaurant</p>
+        </div>
+        <div class="galerie-item" onclick="openLightbox(4)" role="button" tabindex="0"
+          aria-label="Voir la photo : Vacqueyras village du Cru">
+          <div class="galerie-fill g5">
+            <div class="galerie-overlay"></div>
+            <div class="galerie-zoom-icon"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+          </div>
+          <p class="galerie-caption">Vacqueyras, village du Cru</p>
+        </div>
+      </div>
+
+      <!-- Bouton vers page galerie dédiée -->
+      <div class="galerie-cta reveal">
+        <a href="galerie.html" class="galerie-cta-btn">
+          <i class="fa-solid fa-images"></i>
+          Voir toute la galerie photos
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+     LIGHTBOX CAROUSEL
+============================================================ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Galerie photos">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Fermer"><i
+        class="fa-solid fa-xmark"></i></button>
+    <button class="lightbox-prev" onclick="lightboxPrev()" aria-label="Photo précédente"><i
+        class="fa-solid fa-chevron-left"></i></button>
+    <button class="lightbox-next" onclick="lightboxNext()" aria-label="Photo suivante"><i
+        class="fa-solid fa-chevron-right"></i></button>
+    <div class="lightbox-img-wrap">
+      <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+    </div>
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+  </div>
+
+  <!-- ============================================================
+     CONTACT & RÉSERVATION (section fusionnée)
+============================================================ -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-header reveal">
+        <p class="section-label">Nous Rejoindre</p>
+        <h2 class="section-title" style="color:var(--cream);">Contact &amp; <em
+            style="color:var(--gold-light)">Réservation</em></h2>
+        <p>Appelez-nous, écrivez-nous — nous serons ravis de vous accueillir</p>
+      </div>
+
+      <div class="contact-grid">
+
+        <!-- ── Colonne gauche : infos ── -->
+        <div class="contact-info-col reveal">
+          <h3 class="contact-info-title">Retrouvez-nous</h3>
+
+          <div class="contact-info-list">
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <i class="fa-solid fa-phone"></i>
+              </div>
+              <div class="contact-info-text">
+                <div class="contact-info-label">Téléphone</div>
+                <div class="contact-info-value">
+                  <a href="tel:+33490658708">04 90 65 87 08</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <i class="fa-regular fa-envelope"></i>
+              </div>
+              <div class="contact-info-text">
+                <div class="contact-info-label">Email</div>
+                <div class="contact-info-value">
+                  <a href="mailto:cafeducours@orange.fr">cafeducours@orange.fr</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div class="contact-info-text">
+                <div class="contact-info-label">Adresse</div>
+                <div class="contact-info-value">
+                  140 Cours Stassart<br>
+                  84190 Vacqueyras<br>
+                  Provence-Alpes-Côte d'Azur
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <i class="fa-regular fa-clock"></i>
+              </div>
+              <div class="contact-info-text">
+                <div class="contact-info-label">Horaires</div>
+                <div class="contact-info-value">
+                  <strong
+                    style="color:var(--gold-light);display:inline;font-size:inherit;text-transform:none;letter-spacing:0;">Janv.
+                    – Avr. &amp; Oct. – Déc. :</strong><br>
+                  Lun. – Sam. · Déjeuner uniquement<br>
+                  <strong
+                    style="color:var(--gold-light);display:inline;font-size:inherit;text-transform:none;letter-spacing:0;">Mai
+                    – Septembre :</strong><br>
+                  Tous les jours · Midi &amp; Soir<br>
+                  <em style="font-family:var(--font-display);font-style:italic;color:rgba(232,192,106,.6);">Fermé le
+                    dimanche midi</em>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-icon">
+                <i class="fa-solid fa-circle-info"></i>
+              </div>
+              <div class="contact-info-text">
+                <div class="contact-info-label">Paiements acceptés</div>
+                <div class="contact-info-value">
+                  CB, American Express, Espèces<br>
+                  Chèques, Titres Restaurant, Chèques Vacances
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="contact-divider" />
+
+          <div class="social-links">
+            <a href="https://www.facebook.com/cafedu.cours/" target="_blank" rel="noopener" class="social-btn">
+              <i class="fa-brands fa-facebook-f"></i>
+              Facebook
+            </a>
+          </div>
+        </div>
+
+        <!-- ── Colonne droite : formulaire ── -->
+        <div class="contact-form-col reveal reveal-delay-2">
+          <h3 class="form-title">Réservez votre table</h3>
+
+          <form class="reservation-form" id="reservationForm" novalidate>
+            <!-- Ligne 1 : Nom + Email -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="f-nom">
+                  <i class="fa-regular fa-user"></i> Nom complet
+                </label>
+                <input type="text" id="f-nom" name="nom" class="form-input" placeholder="Jean Dupont" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-email">
+                  <i class="fa-regular fa-envelope"></i> Email
+                </label>
+                <input type="email" id="f-email" name="email" class="form-input" placeholder="jean@exemple.com"
+                  required />
+              </div>
+            </div>
+
+            <!-- Ligne 2 : Téléphone + Personnes -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="f-tel">
+                  <i class="fa-solid fa-phone"></i> Téléphone
+                </label>
+                <input type="tel" id="f-tel" name="telephone" class="form-input" placeholder="06 12 34 56 78" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-couverts">
+                  <i class="fa-solid fa-users"></i> Nombre de personnes
+                </label>
+                <select id="f-couverts" name="couverts" class="form-select" required>
+                  <option value="" disabled selected>Choisir…</option>
+                  <option value="1">1 personne</option>
+                  <option value="2">2 personnes</option>
+                  <option value="3">3 personnes</option>
+                  <option value="4">4 personnes</option>
+                  <option value="5">5 personnes</option>
+                  <option value="6">6 personnes</option>
+                  <option value="7-10">7 à 10 personnes</option>
+                  <option value="11+">Plus de 10 personnes</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Ligne 3 : Date + Service -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="f-date">
+                  <i class="fa-regular fa-calendar"></i> Date souhaitée
+                </label>
+                <input type="date" id="f-date" name="date" class="form-input" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-service">
+                  <i class="fa-regular fa-sun"></i> Service
+                </label>
+                <select id="f-service" name="service" class="form-select">
+                  <option value="" disabled selected>Midi ou soir ?</option>
+                  <option value="midi">Déjeuner (12h15)</option>
+                  <option value="soir">Dîner (19h30)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Message -->
+            <div class="form-group">
+              <label class="form-label" for="f-message">
+                <i class="fa-regular fa-comment"></i> Message (optionnel)
+              </label>
+              <textarea id="f-message" name="message" class="form-textarea"
+                placeholder="Allergie, occasion spéciale, demande particulière…"></textarea>
+            </div>
+
+            <!-- Bouton d'envoi -->
+            <button type="submit" class="form-submit">
+              <i class="fa-regular fa-paper-plane"></i>
+              Envoyer ma demande
+            </button>
+
+            <p class="form-note">
+              <i class="fa-solid fa-lock" style="font-size:.65rem;opacity:.5"></i>
+              Vos données restent confidentielles et ne sont jamais partagées.
+            </p>
+          </form>
+
+          <!-- Message de succès (affiché après envoi) -->
+          <div class="form-success" id="formSuccess">
+            <i class="fa-solid fa-circle-check"></i>
+            <h4>Demande envoyée avec succès !</h4>
+            <p>Nous vous confirmerons votre réservation dans les meilleurs délais.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carte Google Maps -->
+      <div class="map-embed reveal">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2862.5!2d4.983389!3d44.138251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12b5e2f3a4b7c8d9%3A0x1!2s140+Cours+Stassart%2C+84190+Vacqueyras!5e0!3m2!1sfr!2sfr!4v1"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          title="Localisation Café du Cours, 140 Cours Stassart, Vacqueyras">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+     FOOTER
+============================================================ -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <p class="footer-brand">Café du Cours</p>
+        <p class="footer-tagline">
+          Sous les platanes centenaires de Vacqueyras,<br>
+          Nathalie et Céline vous accueillent avec chaleur<br>
+          dans la pure tradition provençale.
+        </p>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Navigation</p>
+        <ul class="footer-links">
+          <li><a href="#histoire"><i class="fa-solid fa-chevron-right"></i>Notre Histoire</a></li>
+          <li><a href="#carte"><i class="fa-solid fa-chevron-right"></i>La Carte</a></li>
+          <li><a href="#bar"><i class="fa-solid fa-chevron-right"></i>Le Bar</a></li>
+          <li><a href="#galerie"><i class="fa-solid fa-chevron-right"></i>Ambiance</a></li>
+          <li><a href="#infos"><i class="fa-solid fa-chevron-right"></i>Infos Pratiques</a></li>
+          <li><a href="#contact"><i class="fa-solid fa-chevron-right"></i>Réservation</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Contact</p>
+        <ul class="footer-links">
+          <li>
+            <a href="tel:+33490658708">
+              <i class="fa-solid fa-phone"></i>04 90 65 87 08
+            </a>
+          </li>
+          <li>
+            <a href="mailto:cafeducours@orange.fr">
+              <i class="fa-regular fa-envelope"></i>cafeducours@orange.fr
+            </a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/cafedu.cours/" target="_blank" rel="noopener">
+              <i class="fa-brands fa-facebook-f"></i>Facebook
+            </a>
+          </li>
+          <li style="color:rgba(245,240,232,.22);font-size:0.8rem;margin-top:0.75rem;padding-left:1rem;">
+            140 Cours Stassart<br>84190 Vacqueyras
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Café du Cours — Vacqueyras</p>
+      <p>Fait avec <i class="fa-solid fa-heart" style="color:var(--sienna)"></i> en Provence</p>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+  <script>
+    // ── Navigation scroll ──────────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ── Menu burger mobile ─────────────────────────────────────────
+    const burgerBtn = document.getElementById('burgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    const mobileClose = document.getElementById('mobileNavClose');
+    const mobileBackdrop = document.getElementById('mobileNavBackdrop');
+
+    burgerBtn.addEventListener('click', () => {
+      mobileNav.classList.add('open');
+      burgerBtn.classList.add('is-open');
+      burgerBtn.setAttribute('aria-expanded', 'true');
+      mobileNav.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+
+    const closeMobileNav = () => {
+      mobileNav.classList.remove('open');
+      burgerBtn.classList.remove('is-open');
+      burgerBtn.setAttribute('aria-expanded', 'false');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    mobileClose.addEventListener('click', closeMobileNav);
+    mobileBackdrop.addEventListener('click', closeMobileNav);
+    document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', closeMobileNav));
+
+    // Fermer avec Échap
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMobileNav();
+    });
+
+    // ── Onglets La Carte ───────────────────────────────────────────
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const panel = document.getElementById('tab-' + btn.dataset.tab);
+        if (panel) panel.classList.add('active');
+      });
+    });
+
+    // ── Onglets Le Bar ─────────────────────────────────────────────
+    document.querySelectorAll('.bar-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.bar-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.bar-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        const panel = document.getElementById('bar-tab-' + btn.dataset.barTab);
+        if (panel) panel.classList.add('active');
+      });
+    });
+
+    // ── Reveal au scroll (Intersection Observer) ───────────────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Smooth scroll ancres ───────────────────────────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const targetTop = target.getBoundingClientRect().top + window.pageYOffset - 80;
+          window.scrollTo({ top: targetTop, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // ── Formulaire de réservation (simulation envoi) ───────────────
+    const form = document.getElementById('reservationForm');
+    const success = document.getElementById('formSuccess');
+
+    // Date minimum = aujourd'hui
+    const dateInput = document.getElementById('f-date');
+    if (dateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      dateInput.setAttribute('min', today);
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Validation simple
+      const nom = document.getElementById('f-nom').value.trim();
+      const email = document.getElementById('f-email').value.trim();
+      const date = document.getElementById('f-date').value;
+      const persons = document.getElementById('f-couverts').value;
+
+      if (!nom || !email || !date || !persons) {
+        // Highlight manquants
+        [['f-nom', nom], ['f-email', email], ['f-date', date], ['f-couverts', persons]].forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if (!val) {
+            el.style.borderColor = 'rgba(220,80,60,.5)';
+            el.addEventListener('input', () => el.style.borderColor = '', { once: true });
+          }
+        });
+        return;
+      }
+
+      // Simulation envoi
+      const btn = form.querySelector('.form-submit');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours…';
+
+      setTimeout(() => {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      }, 1400);
+    });
+
+    // ── Lightbox Galerie ──────────────────────────────────────────
+    const lightboxPhotos = [
+      { src: 'image/cafe-du-cours.jpg', caption: 'La terrasse sous les platanes' },
+      { src: 'image/grillade.jpg', caption: 'Nos grillades maison' },
+      { src: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1400&q=90', caption: 'Vins des Côtes du Rhône' },
+      { src: 'image/interieure.jpg', caption: 'Salle provençale (50 couverts)' },
+      { src: 'image/vacqueyras.jpg', caption: 'Vacqueyras, village du Cru' },
+    ];
+    let lightboxIndex = 0;
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImg');
+    const lbCaption = document.getElementById('lightboxCaption');
+    const lbCounter = document.getElementById('lightboxCounter');
+
+    function openLightbox(idx) {
+      lightboxIndex = idx;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      updateLightbox();
+    }
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightbox(fade = false) {
+      const p = lightboxPhotos[lightboxIndex];
+      if (fade) {
+        lbImg.classList.add('fading');
+        setTimeout(() => {
+          lbImg.src = p.src;
+          lbImg.alt = p.caption;
+          lbCaption.textContent = p.caption;
+          lbCounter.textContent = (lightboxIndex + 1) + ' / ' + lightboxPhotos.length;
+          lbImg.classList.remove('fading');
+        }, 220);
+      } else {
+        lbImg.src = p.src;
+        lbImg.alt = p.caption;
+        lbCaption.textContent = p.caption;
+        lbCounter.textContent = (lightboxIndex + 1) + ' / ' + lightboxPhotos.length;
+      }
+    }
+
+    function lightboxPrev() {
+      lightboxIndex = (lightboxIndex - 1 + lightboxPhotos.length) % lightboxPhotos.length;
+      updateLightbox(true);
+    }
+
+    function lightboxNext() {
+      lightboxIndex = (lightboxIndex + 1) % lightboxPhotos.length;
+      updateLightbox(true);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') lightboxPrev();
+      if (e.key === 'ArrowRight') lightboxNext();
+    });
+
+    // Click outside image to close
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb) closeLightbox();
+    });
+
+    // Keyboard accessible galerie items
+    document.querySelectorAll('.galerie-item[role="button"]').forEach((item, idx) => {
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') openLightbox(idx);
+      });
+    });
+
+  </script>
+
+</body>
+
+</html>
